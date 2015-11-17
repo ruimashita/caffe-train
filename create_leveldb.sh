@@ -6,19 +6,19 @@ echo "Creating leveldb..."
 rm -rf train_leveldb
 rm -rf val_leveldb
 
-GLOG_logtostderr=1 convert_imageset \
-    -shuffle true \
+convert_imageset \
+    -shuffle \
     -backend leveldb \
     $DATA/train/ \
     $DATA/train.txt \
-    $DATA/train_leveldb 
+    train_leveldb 
 
-GLOG_logtostderr=1 convert_imageset \
-    -shuffle true \
+convert_imageset \
+    -shuffle \
     -backend leveldb \
     $DATA/val/ \
     $DATA/val.txt \
-    $DATA/val_leveldb 
+    val_leveldb 
 
 
 echo "Done."
