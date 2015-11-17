@@ -1,10 +1,9 @@
 #!/usr/bin/env sh
 DATA=./data_set
-CONFIG_DIR=./config
 
 echo "Creating mean..."
 
-compute_image_mean -backend leveldb $DATA/train_leveldb $CONFIG_DIR/mean.binaryproto 
-python convert_mean_proto_to_npy.py $CONFIG_DIR/mean.binaryproto $CONFIG_DIR/mean.npy
+compute_image_mean -backend leveldb $DATA/train_leveldb mean.binaryproto 
+python convert_mean_proto_to_npy.py mean.binaryproto mean.npy
 
 echo "Done."
