@@ -1,0 +1,19 @@
+train:
+  build: .
+  command: /bin/bash
+  dockerfile: Dockerfile
+  working_dir: /home/caffe-train
+  volumes:
+    - .:/home/caffe-train
+  devices:
+    - /dev/nvidia0:/dev/nvidia0
+    - /dev/nvidiactl:/dev/nvidiactl
+    - /dev/nvidia-uvm:/dev/nvidia-uvm
+
+train-cpu:
+  build: .
+  command: /bin/bash
+  dockerfile: cpu.Dockerfile
+  working_dir: /home/caffe-train
+  volumes:
+    - .:/home/caffe-train
