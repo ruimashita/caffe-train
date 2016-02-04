@@ -226,3 +226,10 @@ layers {
   bottom: "label"
   top: "accuracy"
 }
+layer {
+  name: "loss"
+  type: "SoftmaxWithLoss"
+  bottom: "fc8"
+  bottom: "label"
+  top: "loss"
+}
