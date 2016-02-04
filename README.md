@@ -1,7 +1,12 @@
+# Setup
+
+`/data_set/images/{label}/**.jpg` となるように、画像を配置する。
+
+
 # Caffe Net
 
 ```
-$ docker-compose run docker ./create_leveldb.sh
+$ docker-compose run docker python create_lmdb.py
 $ docker-compose run docker ./create_mean.sh
 ```
 
@@ -17,7 +22,7 @@ $ docker-compose run docker caffe train -solver caffe_net/solver.prototxt --weig
 # VGG
 
 ```
-$ docker-compose run docker ./create_lmdb.sh
+$ docker-compose run docker python create_lmdb.py
 $ docker-compose run docker ./create_mean.sh
 ```
 

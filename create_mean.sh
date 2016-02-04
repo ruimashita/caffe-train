@@ -13,6 +13,8 @@ if [ -e $DATA/train_lmdb ]; then
     compute_image_mean $DATA/train_lmdb mean.binaryproto
 fi
 
+echo "Convert mean.binaryproto to mean.npy"
+
 python convert_mean_proto_to_npy.py mean.binaryproto mean.npy
 
 echo "Done."
