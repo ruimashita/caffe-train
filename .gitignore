@@ -1,1 +1,3 @@
-/data_set/
+/data_set/**/*
+!/data_set/images/
+!.gitkeep
