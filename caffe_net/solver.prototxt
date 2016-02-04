@@ -1,5 +1,4 @@
-train_net: "caffe_net/train.prototxt"
-test_net: "caffe_net/val.prototxt"
+net: "caffe_net/train_val.prototxt"
 test_iter: 1000
 test_interval: 1000
 base_lr: 0.01
@@ -10,6 +9,6 @@ display: 20
 max_iter: 450000
 momentum: 0.9
 weight_decay: 0.0005
-snapshot: 1000
-snapshot_prefix: "caffe_net"
+snapshot: 10000
+snapshot_prefix: "caffe_net_train"
 solver_mode: GPU
