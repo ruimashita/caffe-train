@@ -11,5 +11,5 @@ max_iter: 450000
 momentum: 0.9
 weight_decay: 0.0005
 snapshot: 1000
-snapshot_prefix: "caffe_train"
+snapshot_prefix: "caffe_net"
 solver_mode: GPU
