@@ -37,5 +37,13 @@ $ docker-compose run docker caffe train -solver vgg.solver.prototxt --weights /o
 # plot 
 
 ```
-$ docker-compose run docker python /opt/caffe/tools/extra/plot_training_log.py.example 2 save.png caffe.log
+$ mkdir plot
+$ docker-compose run docker python /opt/caffe/tools/extra/plot_training_log.py.example 0 plot/0.png caffe.log && \
+docker-compose run docker python /opt/caffe/tools/extra/plot_training_log.py.example 1 plot/1.png caffe.log && \
+docker-compose run docker python /opt/caffe/tools/extra/plot_training_log.py.example 2 plot/2.png caffe.log  && \
+docker-compose run docker python /opt/caffe/tools/extra/plot_training_log.py.example 3 plot/3.png caffe.log  && \
+docker-compose run docker python /opt/caffe/tools/extra/plot_training_log.py.example 4 plot/4.png caffe.log  && \
+docker-compose run docker python /opt/caffe/tools/extra/plot_training_log.py.example 5 plot/5.png caffe.log  && \
+docker-compose run docker python /opt/caffe/tools/extra/plot_training_log.py.example 6 plot/6.png caffe.log  && \
+docker-compose run docker python /opt/caffe/tools/extra/plot_training_log.py.example 7 plot/7.png caffe.log
 ```
