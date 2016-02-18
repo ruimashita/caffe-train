@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import csv
 import os
 import sys
 import glob
@@ -20,6 +21,7 @@ TRAIN_LMDB = DATASET_DIR +'/train_lmdb'
 VAL_LMDB = DATASET_DIR + '/val_lmdb'
 TRAIN_DIR = DATASET_DIR + '/train'
 VAL_DIR = DATASET_DIR + '/val'
+LABELS_CSV_FILE = WORK_DIR + '/data_set/labels.csv'
 
 SPLIT_VAL_RATE = 3  #
 
@@ -49,6 +51,15 @@ def labels():
             dirs.append(item)
     dirs.sort()
     return dirs
+
+
+def write_labels_csv_file():
+
+    with open(LABELS_CSV_FILE, 'w') as csvfile:
+        writer = csv.writer(csvfile, delimiter=str(','), quoting=csv.QUOTE_MINIMAL)
+
+        for i, label in enumerate(labels()):
+             writer.writerow([i, label])
 
 
 def get_label_name(path):
@@ -111,3 +122,4 @@ if __name__ == "__main__":
     reset_dirs()
     split_train_val()
     make_lmdbs()
+    write_labels_csv_file()
