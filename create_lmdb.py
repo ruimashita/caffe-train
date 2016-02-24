@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import csv
 import os
+import os.path
 import sys
 import glob
 import random
@@ -151,8 +152,40 @@ def make_lmdbs():
     make_lmdb(TRAIN_LMDB, train_paths)
     make_lmdb(VAL_LMDB, val_paths)
 
+
+def augmentation(paths):
+
+    for path in paths:
+        dir_name = os.path.dirname(path)
+        base_name = os.path.basename(path)
+        img = PIL.Image.open(path)
+
+        for i in range(-20, 20 + 1, 5):
+            if i == 0:
+                continue
+            out = "{0}/{1}_{2}".format(dir_name, i, base_name)
+
+            rgba_img = img.convert('RGBA')
+            # rotated image
+            rot_img = rgba_img.rotate(i, expand=1)
+            # a white image same size as rotated image
+            white_img = PIL.Image.new('RGBA', rot_img.size, (255,)*4)
+            # create a composite image using the alpha layer of rot as a mask
+            tmp = PIL.Image.composite(rot_img, white_img, rot_img)
+            # save your work (converting back to mode='1' or whatever..)
+            tmp.convert(img.mode).save(out)
+            print "save rotate {0}: {1}".format(i, out)
+
+
+def augmentations():
+    train_paths = glob.glob(TRAIN_DIR + '/*/*.jpg')
+    val_paths = glob.glob(VAL_DIR + '/*/*.jpg')
+    augmentation(train_paths)
+    augmentation(val_paths)
+
 if __name__ == "__main__":
     reset_dirs()
     split_train_val()
+    augmentations()
     make_lmdbs()
     write_labels_csv_file()
