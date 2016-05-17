@@ -35,6 +35,8 @@ def reset_txt(path):
 
 
 def init():
+    reset_dir(DATASET_DIR)
+
     reset_txt(TRAIN_TXT)
     reset_txt(VAL_TXT)
 
