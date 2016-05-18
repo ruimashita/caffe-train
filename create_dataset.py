@@ -6,6 +6,8 @@ import glob
 import random
 import shutil
 
+from PIL import Image
+
 WORK_DIR = '/home/docker'
 
 DATASET_DIR = WORK_DIR + '/data_set'
@@ -17,6 +19,7 @@ VAL_TXT = DATASET_DIR + '/val.txt'
 
 LABELS_CSV_FILE = WORK_DIR + '/data_set/labels.csv'
 
+IMAGE_SIZE = 256
 SPLIT_VAL_RATE = 2  #
 
 
@@ -32,6 +35,18 @@ def reset_txt(path):
         os.remove(path)
 
     open(path, 'a').close()
+
+
+def is_verify_image(path):
+    try:
+        im = Image.open(path)
+        if not im.verify:
+            return False
+    except IOError:
+        print("{} is IOError".format(path))
+        return False
+
+    return True
 
 
 def init():
@@ -83,24 +98,32 @@ def split_train_val():
 
     print 'exec split train val. all images num: {}'.format(len(paths))
 
-    for path in paths:
+    for src in paths:
+        if not is_verify_image(src):
+            continue
+
         rand = random.randint(1, 10)
-        label_name = get_label_name(path)
-        basename = os.path.basename(path)
+        label_name = get_label_name(src)
+        basename = os.path.basename(src)
 
         if rand <= SPLIT_VAL_RATE:
-            print 'split to val: {}'.format(path)
+            print 'split to val: {}'.format(src)
             dir_name = '{0}/{1}'.format(VAL_DIR, label_name)
-            file_path = '{0}/{1}'.format(dir_name, basename)
-            line = "{0} {1}".format(file_path, labels().index(label_name))
+            dist = '{0}/{1}'.format(dir_name, basename)
+            rel_dist_path = "{0}/{1}".format(label_name, basename)
+            line = "{0} {1}".format(rel_dist_path, labels().index(label_name))
             write_file(VAL_TXT, line)
         else:
-            print 'split to train: {}'.format(path)
+            print 'split to train: {}'.format(src)
             dir_name = '{0}/{1}'.format(TRAIN_DIR, label_name)
-            file_path = '{0}/{1}'.format(dir_name, basename)
-            line = "{0} {1}".format(file_path, labels().index(label_name))
+            dist = '{0}/{1}'.format(dir_name, basename)
+            rel_dist_path = "{0}/{1}".format(label_name, basename)
+            line = "{0} {1}".format(rel_dist_path, labels().index(label_name))
             write_file(TRAIN_TXT, line)
-        shutil.copy(path, dir_name)
+
+        img = Image.open(src)
+        img = img.resize((IMAGE_SIZE, IMAGE_SIZE), Image.ANTIALIAS)
+        img.save(dist)
 
 
 def write_file(path, line):
@@ -111,3 +134,5 @@ if __name__ == "__main__":
     init()
     split_train_val()
     write_labels_csv_file()
+
+    print("Complete")
