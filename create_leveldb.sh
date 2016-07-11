@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-DATA=./data_set
+DATA=/home/docker/data_set
 
 echo "Creating leveldb..."
 

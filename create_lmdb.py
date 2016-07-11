@@ -114,20 +114,20 @@ def make_lmdb(db_path, paths):
 
 def make_hd5(db_path, paths):
     print 'create db: {0}'.format(db_path)
-    os.system('rm -rf ' + db_path)    
+    os.system('rm -rf ' + db_path)
     random.shuffle(paths)
 
     paths = paths[:20]
     datas = numpy.zeros([len(paths), 3, 256, 256], numpy.float64)
     data_labels = numpy.zeros([len(paths), 2], numpy.float32)
-    
+
     def get_image(path):
         image = caffe.io.load_image(path)
         image = caffe.io.resize_image(image, (IMAGE_SIZE, IMAGE_SIZE,))
         # height, width, channels to channels, height, width
         image = numpy.rollaxis(image, 2).astype(float)
         return image
-    
+
     for i, path in enumerate(paths):
         label_index = get_label_index(path)
         image = get_image(path)
@@ -186,6 +186,6 @@ def augmentations():
 if __name__ == "__main__":
     reset_dirs()
     split_train_val()
-    augmentations()
+    # augmentations()
     make_lmdbs()
     write_labels_csv_file()

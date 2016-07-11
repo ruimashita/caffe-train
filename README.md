@@ -6,6 +6,7 @@
 # Caffe Net
 
 ```
+$ docker-compose run docker python create_dataset.py
 $ docker-compose run docker python create_lmdb.py
 $ docker-compose run docker ./create_mean.sh
 ```
