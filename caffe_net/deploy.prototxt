@@ -1,10 +1,22 @@
 name: "CaffeNet"
-input: "data"
-input_shape {
-  dim: 10
-  dim: 3
-  dim: 227
-  dim: 227
+layer {
+  name: "data"
+  type: "Data"
+  top: "data"
+  top: "label"
+  include {
+    phase: TRAIN
+  }
+  transform_param {
+    mirror: true
+    crop_size: 227
+    mean_file: "mean.binaryproto"
+  }
+  data_param {
+    source: "data_set/train_lmdb"
+    batch_size: 1
+    backend: LMDB
+  }
 }
 layer {
   name: "conv1"
