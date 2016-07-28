@@ -17,3 +17,18 @@ docker-cpu:
   working_dir: /home/docker
   volumes:
     - .:/home/docker
+
+
+imagenet_create:
+  build: .
+  command: /bin/bash ./create_imagenet.sh
+  dockerfile: cpu.Dockerfile
+  working_dir: /home/docker
+  volumes:
+    - .:/home/docker
+    - ~/dataset/train:/home/docker/imagenet/train
+    - ~/dataset/val:/home/docker/imagenet/val
+  environment:
+    - TRAIN_DATA_ROOT=/home/docker/imagenet/train/
+    - VAL_DATA_ROOT=/home/docker/imagenet/val/
+    - OUTPUT=/home/docker/output

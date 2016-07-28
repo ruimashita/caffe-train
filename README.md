@@ -48,3 +48,16 @@ docker-compose run docker python /opt/caffe/tools/extra/plot_training_log.py.exa
 docker-compose run docker python /opt/caffe/tools/extra/plot_training_log.py.example 6 plot/6.png caffe.log  && \
 docker-compose run docker python /opt/caffe/tools/extra/plot_training_log.py.example 7 plot/7.png caffe.log
 ```
+
+
+# create imagenet lmdb
+
+* train images: ~/dataset/train
+* val images: ~/dataset/val
+
+exec
+```
+docker-compose run imagenet_create
+```
+
+output `output/ilsvrc12_train_lmdb` `output/ilsvrc12_val_lmdb`
